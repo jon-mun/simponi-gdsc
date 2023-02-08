@@ -7,7 +7,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(
+        Flexible(
           flex: 4,
           child: Column(children: <Widget>[
             Expanded(
@@ -100,10 +100,11 @@ class Posts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: const [
-      Post(),
-      Post(),
-    ]);
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: 10,
+      itemBuilder: (context, index) => Post(),
+    );
   }
 }
 
@@ -113,56 +114,63 @@ class Post extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
       width: double.infinity,
       decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).colorScheme.onPrimary)),
-      child: Row(children: <Widget>[
-        const Expanded(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12.5),
-              child: CircleAvatar(
-                radius: 16,
-                backgroundImage: AssetImage('assets/gdsc.jpg'),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Expanded(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12.5),
+                child: CircleAvatar(
+                  radius: 16,
+                  backgroundImage: AssetImage('assets/gdsc.jpg'),
+                ),
               ),
             ),
           ),
-        ),
-        Expanded(
-          flex: 5,
-          child: Column(children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(12.5).copyWith(bottom: 4, left: 0),
-              child: SizedBox(
-                height: 20,
-                width: double.infinity,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text('Andreas Notokusumo',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6
-                              ?.copyWith(fontSize: 16)),
-                      Row(
-                        children: const <Widget>[
-                          Text('4j'),
-                          Icon(Icons.more_vert),
-                        ],
-                      ),
-                    ]),
-              ),
+          Expanded(
+            flex: 5,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.all(12.5).copyWith(bottom: 4, left: 0),
+                  child: SizedBox(
+                    height: 20,
+                    width: double.infinity,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Andreas Notokusumo',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(fontSize: 16)),
+                          Row(
+                            children: const <Widget>[
+                              Text('4j'),
+                              Icon(Icons.more_vert),
+                            ],
+                          ),
+                        ]),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 4),
+                  child: Flexible(
+                      child: Text(
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id libero vel felis eleifend ornare vitae et neque. Sed ultrices, metus in pretium fermentum, nunc mauris volutpat orci, eu tristique massa neque quis metus. Integer elit dolor, porttitor sed orci sed, tempor vehicula nunc.')),
+                ),
+                // constraints: const BoxConstraints.expand(),
+              ],
             ),
-            Expanded(
-                child: Container(
-                    constraints: const BoxConstraints.expand(),
-                    child: const Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id libero vel felis eleifend ornare vitae et neque. Sed ultrices, metus in pretium fermentum, nunc mauris volutpat orci, eu tristique massa neque quis metus. Integer elit dolor, porttitor sed orci sed, tempor vehicula nunc.'))),
-          ]),
-        ),
-      ]),
+          ),
+        ],
+      ),
     );
   }
 }
